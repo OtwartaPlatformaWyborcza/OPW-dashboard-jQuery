@@ -1,0 +1,19 @@
+.data-point-label {
+	position: absolute;
+	display: none;
+	color: #000;
+	background-color: #FFF;
+	padding: 1px;
+}
+
+#cake {
+	width: 200px;
+	height: 200px;
+	background-color: #F0AD4E;
+	border-radius: 100px;
+	margin: 0 auto;
+}
+
+#test3 {
+	list-style: none;
+}

@@ -19,7 +19,46 @@ var verticalBarOptions = {
 		hoverable: true,
 	},*/
 	colors: ["#449D44"]
-}
+};
+
+var horizontalBarOptions = {
+	series: {
+		bars: {
+			show: true,
+			horizontal: true,
+			align: "center",
+			lineWidth: 0,
+			fill: 1,
+			fillColor: {
+            	colors: [{ opacity: 0.7}, {opacity: 1}]
+            }
+		}
+	},
+	yaxis: {
+		mode: "categories",
+		tickLength: 0,
+		autoscaleMargin: 0
+	},
+	colors: ["#337AB7"]
+};
+
+var pieOptions = {
+    series: {
+        pie: {
+            show: true,
+            radius: 1,
+            label: {
+                show: true,
+                radius: 2/3,
+                formatter: labelFormatter,
+                threshold: 0.01
+            }
+        }
+    },
+    legend: {
+        show: false
+    }
+};
 
 function tmp(data) {
 	var procent = Math.round(data.obwodowa * 100 / data.obwodowaAll);
@@ -44,11 +83,23 @@ function komisje(data) {
 	var procent=0;
 	for (i in data) {
 		var el = [];
-		procent = Math.round(data[i].obwodowa * 100 / data[i].obwodowaAll);
+		procent = Math.round(data[i].frekwencja * 100 / data[i].frekwencjaAll);
 		el.push(data[i].okregowaName.replace("Okręgowa Komisja Wyborcza Nr","OKW"), procent);
 		chartData.push(el);
 	}
 	return [chartData];
+}
+
+function frekwencja(data) {
+	var chartData = [];
+	var procent=0;
+	for (i in data) {
+		var el = [];
+		procent = Math.round(data[i].obwodowa * 100 / data[i].obwodowaAll);
+		el.push(procent,data[i].okregowaName.replace(/Okręgowa .* Nr/,"Nr"));
+		chartData.push(el);
+	}
+	return [chartData]
 }
 
 //Etykiety nad słupkami
@@ -62,6 +113,11 @@ function addLabels(data) {
 	});	
 }
 
+function labelFormatter(label, series) {
+	if (label === "Tak")
+		return "<div style='color:white;'>" + Math.round(series.percent) + "%</div>";
+	return ""
+}	
 
 function updateFrekwencja(now,all) {
 	var data = Math.round( (100*now) / all );
@@ -71,7 +127,19 @@ function updateFrekwencja(now,all) {
 $(document).ready(function(){
 	$.getJSON("http://91.250.114.134:8080/opw/service/wynik/complete", function(data){
 		
-		var chartData=prezydent(data.kandydatList);
+		var chartData = [];
+		chartData[0] = {
+			label: "Tak",
+			data: ((data.obwodowa*100)/data.obwodowaAll)
+		};
+		chartData[1] = {
+			label: "Nie",
+			data: (((data.obwodowaAll-data.obwodowa)*100)/data.obwodowaAll)
+		};
+		console.log(chartData[0]);
+		$.plot("#pie-chart", chartData, pieOptions);
+
+		chartData = prezydent(data.kandydatList);
 		var myPlot = $.plot("#wykres2", chartData, verticalBarOptions);
 		addLabels(myPlot);
 		
@@ -79,9 +147,13 @@ $(document).ready(function(){
 		//myPlot = $.plot("#wykres3", chartData, verticalBarOptions);
 		//addLabels(myPlot);
 
-		$("#aktualizacja").append("<span>"+data.exportDate+"</span>");
+		var aktualizacja = data.exportDate.substring(11,19);
+		$("#aktualizacja").append("<span>"+aktualizacja+"</span>");
 		
 		updateFrekwencja(data.frekwencja,data.frekwencjaAll);
+
+		chartData = frekwencja(data.okregowaList);
+		var myPlot = $.plot("#wykres4", chartData, horizontalBarOptions);
 
 		for (i in data.okregowaList)
 		{

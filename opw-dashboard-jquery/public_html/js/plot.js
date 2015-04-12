@@ -60,6 +60,8 @@ var pieOptions = {
     }
 };
 
+var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591"
+
 function tmp( data ) {
     var procent = Math.round( data.obwodowa * 100 / data.obwodowaAll );
     var bar = "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" + procent + "%'>" + data.obwodowa + "/" + data.obwodowaAll + "</div>";
@@ -126,47 +128,50 @@ function updateFrekwencja( now, all ) {
 }
 
 $( document ).ready( function() {
-    $.getJSON( "http://91.250.114.134:8080/opw/service/wynik/complete", function( data ) {
+    $.ajax ( {
+        beforeSend: function( request ) {
+            request.setRequestHeader( "X-OPW-API-token", token );
+        },
+        dataType: "json",
+        url: "http://91.250.114.134:8080/opw/service/wynik/complete",
+        success: function(data) {
+            var chartData = [];
+            chartData[0] = {
+                label: "Tak",
+                data: ( ( data.obwodowa * 100 ) / data.obwodowaAll )
+            };
+            chartData[1] = {
+                label: "Nie",
+                data: ( ( ( data.obwodowaAll - data.obwodowa ) * 100 ) / data.obwodowaAll )
+            };
 
-        var chartData = [];
-        chartData[0] = {
-            label: "Tak",
-            data: ( ( data.obwodowa * 100 ) / data.obwodowaAll )
-        };
-        chartData[1] = {
-            label: "Nie",
-            data: ( ( ( data.obwodowaAll - data.obwodowa ) * 100 ) / data.obwodowaAll )
-        };
+            //console.log( chartData[0] );
+            $.plot( "#pie-chart", chartData, pieOptions );
 
-        //console.log( chartData[0] );
-        $.plot( "#pie-chart", chartData, pieOptions );
+            chartData = prezydent( data.kandydatList );
+            var myPlot = $.plot( "#wykres2", chartData, verticalBarOptions );
+            addLabels( myPlot );
 
-        chartData = prezydent( data.kandydatList );
-        var myPlot = $.plot( "#wykres2", chartData, verticalBarOptions );
-        addLabels( myPlot );
+            //chartData = komisje(data.okregowaList)
+            //myPlot = $.plot("#wykres3", chartData, verticalBarOptions);
+            //addLabels(myPlot);
 
-        //chartData = komisje(data.okregowaList)
-        //myPlot = $.plot("#wykres3", chartData, verticalBarOptions);
-        //addLabels(myPlot);
+            var aktualizacja = data.exportDate.substring( 11, 19 );
+            $( "#aktualizacja" ).append( "<span>" + aktualizacja + "</span>" );
 
-        var aktualizacja = data.exportDate.substring( 11, 19 );
-        $( "#aktualizacja" ).append( "<span>" + aktualizacja + "</span>" );
+            updateFrekwencja( data.frekwencja, data.frekwencjaAll );
 
-        updateFrekwencja( data.frekwencja, data.frekwencjaAll );
+            chartData = frekwencja( data.okregowaList );
+            var myPlot = $.plot( "#wykres4", chartData, horizontalBarOptions );
 
-        chartData = frekwencja( data.okregowaList );
-        var myPlot = $.plot( "#wykres4", chartData, horizontalBarOptions );
-
-        for ( i in data.okregowaList ) {
-            var el = data.okregowaList[i];
-            $( "#test3" ).append( "<li>" + el.okregowaName.replace( /Okręgowa .* Nr/, "OKW" ) + "</li>" );
-            $( "#test3" ).append( "<li>" + tmp( data.okregowaList[i] ) + "</li>" );
+            for ( i in data.okregowaList ) {
+                var el = data.okregowaList[i];
+                $( "#test3" ).append( "<li>" + el.okregowaName.replace( /Okręgowa .* Nr/, "OKW" ) + "</li>" );
+                $( "#test3" ).append( "<li>" + tmp( data.okregowaList[i] ) + "</li>" );
+            }
         }
-
     } );
-
 } );
-
 /*
 $("<div class='tooltip'></div>").css({
     position: "absolute",

@@ -131,10 +131,16 @@ $( document ).ready( function() {
     $.ajax ( {
         beforeSend: function( request ) {
             request.setRequestHeader( "X-OPW-API-token", token );
+            //request.setRequestHeader( "X-OPW-debug-500", '500');
         },
         dataType: "json",
         url: "http://91.250.114.134:8080/opw/service/wynik/complete",
-        success: function(data) {
+        statusCode: {
+            500: function() {
+                console.log( "Error: 500" );
+            }
+        },
+        success: function( data ) {
             var chartData = [];
             chartData[0] = {
                 label: "Tak",
@@ -166,7 +172,7 @@ $( document ).ready( function() {
 
             for ( i in data.okregowaList ) {
                 var el = data.okregowaList[i];
-                $( "#test3" ).append( "<li>" + el.okregowaName.replace( /Okręgowa .* Nr/, "OKW" ) + "</li>" );
+                $( "#test3" ).append( "<li>" + el.okregowaName.replace( /.* Nr/, "OKW" ) + "</li>" );
                 $( "#test3" ).append( "<li>" + tmp( data.okregowaList[i] ) + "</li>" );
             }
         }

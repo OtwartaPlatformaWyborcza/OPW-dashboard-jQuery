@@ -51,6 +51,7 @@ function addLabels( data ) {
     } );
 }
 
+//Pasek z frekwencją
 function updateFrekwencja( now, all ) {
     var data = Math.round( ( 100 * now ) / all );
     $( "#progress-frekwencja" ).css( { width: data + "%" } ).append( data + "%" );
@@ -73,15 +74,10 @@ $( document ).ready( function() {
         },
         success: function( data ) {
             gauge( ( data.obwodowa * 100 ) / data.obwodowaAll );
-            //console.log( chartData[0] );
 
             chartData = prezydent( data.kandydatList );
             var myPlot = $.plot( "#wykres2", chartData, chartConfig.verticalBar );
             addLabels( myPlot );
-
-            //chartData = komisje(data.okregowaList)
-            //myPlot = $.plot("#wykres3", chartData, verticalBarOptions);
-            //addLabels(myPlot);
 
             var aktualizacja = data.exportDate.substring( 11, 19 );
             $( "#aktualizacja" ).append( "<span>" + aktualizacja + "</span>" );
@@ -99,20 +95,3 @@ $( document ).ready( function() {
         }
     } );
 } );
-/*
-$("<div class='tooltip'></div>").css({
-    position: "absolute",
-    display: "none",
-    opacity: 1
-}).appendTo("body");
-
-$("#wykres2").bind("plothover", function (event, pos, item) {
-    if (item) {
-        var x = item.datapoint[0].toFixed(2),
-            y = item.datapoint[1].toFixed(2);
-        $(".tooltip").html(Math.round(y)).css({top: item.pageY+5, left: item.pageX-13}).fadeIn(200);
-    } else {
-        $(".tooltip").hide();
-    }
-});
-*/

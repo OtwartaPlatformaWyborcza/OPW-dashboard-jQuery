@@ -13,6 +13,9 @@
 
 #canvas {
 	display: block;
-	width: 300px;
 	margin: 0 auto;
+}
+
+h1 .glyphicon {
+	color: #D9534F;
 }

@@ -1,5 +1,3 @@
-var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591"
-
 function tmp( data ) {
     var procent = Math.round( data.obwodowa * 100 / data.obwodowaAll );
     var bar = "<div class='progress-bar progress-bar-success' role='progressbar' style='width:" + procent + "%'>" + data.obwodowa + "/" + data.obwodowaAll + "</div>";
@@ -62,10 +60,12 @@ $( document ).ready( function() {
     $.ajax ( {
         beforeSend: function( request ) {
             request.setRequestHeader( "X-OPW-API-token", token );
-            //request.setRequestHeader( "X-OPW-debug-500", '500');
+            if ( debug === true ) {
+                request.setRequestHeader( "X-OPW-debug-500", '500');
+            };
         },
         dataType: "json",
-        url: "http://91.250.114.134:8080/opw/service/wynik/complete",
+        url: jsonURL,
         statusCode: {
             500: function() {
                 console.log( "Error: 500" );
@@ -81,7 +81,7 @@ $( document ).ready( function() {
                 label: "Nie",
                 data: ( ( ( data.obwodowaAll - data.obwodowa ) * 100 ) / data.obwodowaAll )
             };
-
+            gauge( ( data.obwodowa * 100 ) / data.obwodowaAll );
             //console.log( chartData[0] );
             $.plot( "#pie-chart", chartData, chartConfig.cake );
 

@@ -9,12 +9,16 @@
 #pie-chart {
 	width: 200px;
 	height: 200px;
-	/*background-color: #F0AD4E;
-	border-radius: 100px;*/
 	margin: 0 auto;
 }
 
 #test3 {
 	list-style: none;
 	padding: 0;
+}
+
+#canvas {
+	display: block;
+	width: 300px;
+	margin: 0 auto;
 }

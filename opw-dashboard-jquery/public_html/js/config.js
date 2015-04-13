@@ -1,3 +1,8 @@
+var debug = false;
+var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591"
+var jsonURL = "http://91.250.114.134:8080/opw/service/wynik/complete"
+
+//Dodawanie etykiet na kole
 function labelFormatter( label, series ) {
     if ( label === "Tak" ) {
         return "<div style='color:#FFF;'>" + Math.round( series.percent ) + "%</div>";
@@ -15,7 +20,7 @@ var chartConfig = {
                 lineWidth: 0,
                 fill: 1,
                 fillColor: {
-                    colors: [ { opacity: 0.7 }, { opacity: 1 } ]
+                    colors: [ "#F0AD4E", "#EB9316" ]
                 }
             }
         },
@@ -25,11 +30,10 @@ var chartConfig = {
         },
         /*grid: {
             hoverable: true,
-        },*/
-        colors: [ "#449D44" ]
+        }*/
     },
 
-    
+
     horizontalBar: {
         series: {
             bars: {
@@ -39,7 +43,7 @@ var chartConfig = {
                 lineWidth: 0,
                 fill: 1,
                 fillColor: {
-                    colors: [ { opacity: 0.7 }, { opacity: 1 } ]
+                    colors: [ "#5BC0DE", "#2AABD2" ]
                 }
             }
         },

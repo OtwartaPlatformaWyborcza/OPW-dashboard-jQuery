@@ -1,65 +1,3 @@
-var verticalBarOptions = {
-    series: {
-        bars: {
-            show: true,
-            barWidth: 0.9,
-            align: "center",
-            lineWidth: 0,
-            fill: 1,
-            fillColor: {
-                colors: [ { opacity: 0.7 }, { opacity: 1 } ]
-            }
-        }
-    },
-    xaxis: {
-        mode: "categories",
-        tickLength: 0
-    },
-    /*grid: {
-        hoverable: true,
-    },*/
-    colors: [ "#449D44" ]
-};
-
-var horizontalBarOptions = {
-    series: {
-        bars: {
-            show: true,
-            horizontal: true,
-            align: "center",
-            lineWidth: 0,
-            fill: 1,
-            fillColor: {
-                colors: [ { opacity: 0.7 }, { opacity: 1 } ]
-            }
-        }
-    },
-    yaxis: {
-        mode: "categories",
-        tickLength: 0,
-        autoscaleMargin: 0
-    },
-    colors: [ "#337AB7" ]
-};
-
-var pieOptions = {
-    series: {
-        pie: {
-            show: true,
-            radius: 1,
-            label: {
-                show: true,
-                radius: 2 / 3,
-                formatter: labelFormatter,
-                threshold: 0.01
-            }
-        }
-    },
-    legend: {
-        show: false
-    }
-};
-
 var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591"
 
 function tmp( data ) {
@@ -115,13 +53,6 @@ function addLabels( data ) {
     } );
 }
 
-function labelFormatter( label, series ) {
-    if ( label === "Tak" ) {
-        return "<div style='color:white;'>" + Math.round( series.percent ) + "%</div>";
-    }
-    return ""
-}
-
 function updateFrekwencja( now, all ) {
     var data = Math.round( ( 100 * now ) / all );
     $( "#progress-frekwencja" ).css( { width: data + "%" } ).append( data + "%" );
@@ -152,10 +83,10 @@ $( document ).ready( function() {
             };
 
             //console.log( chartData[0] );
-            $.plot( "#pie-chart", chartData, pieOptions );
+            $.plot( "#pie-chart", chartData, chartConfig.cake );
 
             chartData = prezydent( data.kandydatList );
-            var myPlot = $.plot( "#wykres2", chartData, verticalBarOptions );
+            var myPlot = $.plot( "#wykres2", chartData, chartConfig.verticalBar );
             addLabels( myPlot );
 
             //chartData = komisje(data.okregowaList)
@@ -168,7 +99,7 @@ $( document ).ready( function() {
             updateFrekwencja( data.frekwencja, data.frekwencjaAll );
 
             chartData = frekwencja( data.okregowaList );
-            var myPlot = $.plot( "#wykres4", chartData, horizontalBarOptions );
+            var myPlot = $.plot( "#wykres4", chartData, chartConfig.horizontalBar );
 
             for ( i in data.okregowaList ) {
                 var el = data.okregowaList[i];

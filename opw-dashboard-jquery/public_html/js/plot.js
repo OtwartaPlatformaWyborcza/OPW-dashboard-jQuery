@@ -9,9 +9,10 @@ function prezydent( data ) {
     var chartData = [];
     for ( i in data ) {
         var person = [];
-        person.push( data[i].fullname, data[i].glosow );
+        person.push( data[i].lastname + " " + data[i].firstname, data[i].glosow );
         chartData.push( person );
     }
+    chartData.sort();
     return [ chartData ];
 }
 

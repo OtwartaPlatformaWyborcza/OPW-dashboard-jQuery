@@ -1,23 +1,15 @@
 function gauge( procent ) {
 
-    //canvas initialization
     var canvas = document.getElementById( "canvas" );
     var ctx = canvas.getContext( "2d" );
 
-    //dimensions
     var W = canvas.width;
     var H = canvas.height;
 
-    //Variables
-    var newDegrees = 0;
-    var difference = 0;
-    var color = "#D9534F";
-    var bgcolor = "#EEE";
-    var wow = "hsl(" + procent * 1.17 + ", 56.4%, 45.9%)";
     var gradient = ctx.createLinearGradient( 0, 0, W, 0 );
-    gradient.addColorStop( 0, "hsl(0, 56.4%, 45.9%)" );
-    gradient.addColorStop( 0.5, "#F0AD4E" );
-    gradient.addColorStop( 1, "green" );
+    gradient.addColorStop( 0, "#337AB7" );
+    gradient.addColorStop( 0.5, "#5BC0DE" );
+    gradient.addColorStop( 1, "#5CB85C" );
     var text;
     var animationLoop, redrawLoop;
 
@@ -25,7 +17,7 @@ function gauge( procent ) {
     ctx.beginPath();
     ctx.strokeStyle = gradient;
     ctx.lineWidth = 30;
-    ctx.arc( W / 2, H / 2, 100, Math.PI, 0, false );
+    ctx.arc( W / 2, H - 30, 100, Math.PI, 0, false );
     ctx.stroke();
 
     //Main arc
@@ -34,8 +26,20 @@ function gauge( procent ) {
     } else {
         var radians = Math.PI + ( procent * Math.PI / 100 );
     }
+
     ctx.beginPath();
-    ctx.strokeStyle = bgcolor;
-    ctx.arc( W / 2, H / 2, 100, 0, radians, true );
+    ctx.lineWidth = 32;
+    ctx.strokeStyle = "#EEE";
+    ctx.arc( W / 2, H - 30, 100, 0, radians, true );
     ctx.stroke();
+
+    ctx.font = "17px arial";
+    ctx.fillStyle = "#777"
+    ctx.fillText( "0%", 38, H - 10 );
+    ctx.fillText( "100%", W - 72, H - 10 );
+
+    ctx.fillStyle = "#333"
+    ctx.font = "50px arial";
+    var tekst = Math.round( procent ) + "%";
+    ctx.fillText( tekst, ( W - ctx.measureText( tekst ).width ) / 2, H - 30 );
 }

@@ -53,24 +53,5 @@ var chartConfig = {
             autoscaleMargin: 0
         },
         colors: [ "#337AB7" ]
-    },
-
-
-    cake: {
-        series: {
-            pie: {
-                show: true,
-                radius: 1,
-                    label: {
-                    show: true,
-                    radius: 2 / 3,
-                    formatter: labelFormatter,
-                    threshold: 0.01
-                }
-            }
-        },
-        legend: {
-            show: false
-        }
     }
 };

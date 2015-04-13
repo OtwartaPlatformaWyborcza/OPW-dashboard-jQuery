@@ -72,18 +72,8 @@ $( document ).ready( function() {
             }
         },
         success: function( data ) {
-            var chartData = [];
-            chartData[0] = {
-                label: "Tak",
-                data: ( ( data.obwodowa * 100 ) / data.obwodowaAll )
-            };
-            chartData[1] = {
-                label: "Nie",
-                data: ( ( ( data.obwodowaAll - data.obwodowa ) * 100 ) / data.obwodowaAll )
-            };
             gauge( ( data.obwodowa * 100 ) / data.obwodowaAll );
             //console.log( chartData[0] );
-            $.plot( "#pie-chart", chartData, chartConfig.cake );
 
             chartData = prezydent( data.kandydatList );
             var myPlot = $.plot( "#wykres2", chartData, chartConfig.verticalBar );

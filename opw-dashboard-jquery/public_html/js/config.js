@@ -11,18 +11,18 @@ var chartConfig = {
                 align: "center",
                 lineWidth: 0,
                 fill: 1,
-                fillColor: {
-                    colors: [ "#F0AD4E", "#EB9316" ]
-                }
             }
         },
         xaxis: {
-            mode: "categories",
-            tickLength: 0
+            mode: "categories"
         },
-        /*grid: {
+        yaxis: {
+            min: 0,
+            tickFormatter: function( v ) { return ( v + '%' ) }
+        },
+        grid: {
             hoverable: true,
-        }*/
+        }
     },
 
 

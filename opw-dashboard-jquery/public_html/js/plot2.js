@@ -12,19 +12,33 @@ function prezydent(data) {
     for (i in data)
         suma+=data[i].glosow;
 
+    var procent, nazwisko, etykieta, opis, imieNazwisko;
     for (i in data) {
-        var procent = Math.round ( ( data[i].glosow * 100 ) / suma );
-        dataChart.addRows( [ [ data[i].lastname, procent, "Głosów: <b>" + data[i].glosow.toString() + "</b>", procent.toString() + '%' ] ] );
+        procent =  ( ( data[i].glosow * 100 ) / suma ) / 100;
+        imieNazwisko = data[i].firstname + '&nbsp' + data[i].lastname.toUpperCase();
+        nazwisko = data[i].lastname.toUpperCase();
+        opis = "<b>" + imieNazwisko + "</b> " + data[i].glosow.toString() +  "</b>";
+        etykieta =  Math.round(procent*100) + '%';
+        dataChart.addRows( [ [ nazwisko, procent, opis, etykieta ] ] );
     }
 
     dataChart.sort([{column: 0}, {column: 1}]);
 
-    wrapper = new google.visualization.ChartWrapper({
+    prezydentChar = new google.visualization.ChartWrapper({
         chartType: 'ColumnChart',
         dataTable: dataChart,
-        options: {'tooltip': {isHtml: true}},
-        containerId: 'wykres2',
-    wrapper.draw();
+        options: {
+            tooltip: {isHtml: true},
+            legend: 'none',
+            hAxis: { slantedText:true, slantedTextAngle:20 },
+            vAxis: { 'format': '#%'},
+            chartArea: {width: '90%'}
+        },
+        containerId: 'wykres2'
+    });
+
+    prezydentChar.draw();
+
 }
 
 $( document ).ready( function() { 

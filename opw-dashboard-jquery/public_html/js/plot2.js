@@ -27,13 +27,7 @@ function prezydent(data) {
     prezydentChar = new google.visualization.ChartWrapper({
         chartType: 'ColumnChart',
         dataTable: dataChart,
-        options: {
-            tooltip: {isHtml: true},
-            legend: 'none',
-            hAxis: { slantedText:true, slantedTextAngle:20 },
-            vAxis: { 'format': '#%'},
-            chartArea: {width: '90%'}
-        },
+        options: cfg.vertical,
         containerId: 'wykres2'
     });
 

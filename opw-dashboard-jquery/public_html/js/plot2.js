@@ -1,5 +1,4 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'bar']});
-//google.setOnLoadCallback(prezydent);
+google.load('visualization', '1.0', {'packages':['corechart', 'bar', 'gauge']});
 
 function prezydent(data) {
     var dataChart = new google.visualization.DataTable();
@@ -35,6 +34,28 @@ function prezydent(data) {
 
 }
 
+
+function gauge(a, b) {
+    var data = google.visualization.arrayToDataTable([
+        ['Label', 'value'],
+        ['gauge', Math.round(b/a*100) ]
+    ]);
+
+    var options = {
+          width: 400, height: 120,
+          redFrom: 0, redTo: 33,
+          yellowFrom: 33, yellowTo: 66,
+          greenFrom: 66, greenTo: 100,
+          minorTicks: 5
+    };
+
+    var chart = new google.visualization.Gauge(document.getElementById('gauge'));
+
+    chart.draw(data, options);
+
+}
+
+
 $( document ).ready( function() { 
     $.ajax ( {
             beforeSend: function( request ) {
@@ -52,6 +73,7 @@ $( document ).ready( function() {
             },
             success: function( data ) {
                 prezydent(data.kandydatList);
+                gauge(data.obwodowaAll, data.obwodowa);
             }
     });
 });

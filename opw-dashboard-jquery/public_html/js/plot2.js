@@ -1,4 +1,38 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'bar', 'gauge']});
+google.load('visualization', '1.0', {'packages':['corechart', 'bar', 'gauge', 'controls', 'table', 'geochart']});
+
+
+function wojewodztwa() {
+    var data = google.visualization.arrayToDataTable([
+        ['Województwo', 'Frekwencja', 'Otrzymane protokoły'],
+        ['Dolnośląskie', 2761477, 131],
+        ['Kujawsko-pomorskie', 1324110, 176],
+        ['Lubelskie', 959574, 127],
+        ['Lubuskie', 907563, 117],
+        ['Łódzkie', 655875, 19],
+        ['Małopolskie', 607906, 260],
+        ['Mazowieckie', 380181, 17],
+        ['Opolskie', 371282, 141],
+        ['Podkarpackie', 67370, 244],
+        ['Podlaskie', 52192, 43],
+        ['Pomorskie', 52192, 43],
+        ['śląskie', 38262, 11],
+        ['świętokrzyskie', 48262, 145],
+        ['warmińsko-mazurskie', 38262, 211],
+        ['wielkopolskie', 37262, 111],
+        ['zachodniopomorskie', 78262, 80]
+      ]);
+
+      var options = {
+        region: 'PL',
+        resolution: 'provinces',
+        colorAxis: {colors: ['#B0D794', '#4C6472']},
+        backgroundColor: '##337AB7'
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
+
+      chart.draw(data, options);
+}
 
 function prezydent(data) {
     var dataChart = new google.visualization.DataTable();
@@ -74,6 +108,7 @@ $( document ).ready( function() {
             success: function( data ) {
                 prezydent(data.kandydatList);
                 gauge(data.obwodowaAll, data.obwodowa);
+                wojewodztwa();
             }
     });
 });

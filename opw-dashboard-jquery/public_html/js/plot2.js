@@ -39,25 +39,29 @@ function prezydent(data) {
     var dataChart = new google.visualization.DataTable();
     dataChart.addColumn('string', 'kandydat');
     dataChart.addColumn('number', 'wynik procentowy');
-    dataChart.addColumn({type: 'string', role: 'tooltip', 'p': {'html':true}});
     dataChart.addColumn({type: 'string', role: 'annotation'});
+    dataChart.addColumn({type: 'string', role: 'tooltip', 'p': {'html':true}});
+    dataChart.addColumn('number', 'glosow');
     dataChart.addColumn('number', 'linia');
 
     var suma = 0;
     for (i in data)
         suma+=data[i].glosow;
 
+    console.log("Suma:"+suma);
+    console.log()
+    
     var procent, nazwisko, etykieta, opis, imieNazwisko;
     for (i in data) {
         procent =  ( ( data[i].glosow * 100 ) / suma ) / 100;
         imieNazwisko = data[i].firstname + '&nbsp' + data[i].lastname.toUpperCase();
         nazwisko = data[i].lastname.toUpperCase();
-        opis = "<b>" + imieNazwisko + "</b> " + data[i].glosow.toString() +  "</b>";
+        opis = "<b>" + imieNazwisko + " </b>Głosów:&nbsp;" + data[i].glosow.toString() +  "</b>";
         etykieta =  Math.round(procent*100) + '%';
-        dataChart.addRows( [ [ nazwisko, procent, opis, etykieta, 0.1 ] ] );
+        dataChart.addRows( [ [ nazwisko, procent, etykieta, opis, data[i].glosow, suma/2 ] ] );
     }
 
-    dataChart.sort([{column: 0}, {column: 1}, {column: 2}, {column: 3}, {column: 4}]);
+    dataChart.sort([{column: 0}]);
 
     prezydentChar = new google.visualization.ChartWrapper({
         chartType: 'ComboChart',

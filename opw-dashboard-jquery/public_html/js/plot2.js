@@ -1,4 +1,4 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'bar', 'gauge', 'controls', 'table', 'geochart']});
+google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'controls', 'table', 'geochart']});
 
 
 function wojewodztwa() {
@@ -26,10 +26,11 @@ function wojewodztwa() {
         region: 'PL',
         resolution: 'provinces',
         colorAxis: {colors: ['#B0D794', '#4C6472']},
-        backgroundColor: '##337AB7'
+        backgroundColor: '#337AB7'
       };
 
       var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
+
 
       chart.draw(data, options);
 }
@@ -40,6 +41,7 @@ function prezydent(data) {
     dataChart.addColumn('number', 'wynik procentowy');
     dataChart.addColumn({type: 'string', role: 'tooltip', 'p': {'html':true}});
     dataChart.addColumn({type: 'string', role: 'annotation'});
+    dataChart.addColumn('number', 'linia');
 
     var suma = 0;
     for (i in data)
@@ -52,13 +54,13 @@ function prezydent(data) {
         nazwisko = data[i].lastname.toUpperCase();
         opis = "<b>" + imieNazwisko + "</b> " + data[i].glosow.toString() +  "</b>";
         etykieta =  Math.round(procent*100) + '%';
-        dataChart.addRows( [ [ nazwisko, procent, opis, etykieta ] ] );
+        dataChart.addRows( [ [ nazwisko, procent, opis, etykieta, 0.1 ] ] );
     }
 
-    dataChart.sort([{column: 0}, {column: 1}]);
+    dataChart.sort([{column: 0}, {column: 1}, {column: 2}, {column: 3}, {column: 4}]);
 
     prezydentChar = new google.visualization.ChartWrapper({
-        chartType: 'ColumnChart',
+        chartType: 'ComboChart',
         dataTable: dataChart,
         options: cfg.vertical,
         containerId: 'wykres2'

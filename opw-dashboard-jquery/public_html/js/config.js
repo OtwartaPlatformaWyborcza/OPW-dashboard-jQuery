@@ -8,7 +8,16 @@ var cfg = {
         tooltip: {isHtml: true},
         legend: 'none',
         hAxis: { slantedText:true, slantedTextAngle:20 },
-        vAxis: { 'format': '#%'},
-        chartArea: {width: '90%'}
+        vAxes:[
+            {titleTextStyle: {color: '#FF0000'}}, // Left axis
+            {titleTextStyle: {color: '#0000FF'}} // Right axis
+        ],
+        vAxes: { 0:{format: '#%'}},
+        chartArea: {width: '90%'},
+        seriesType: "bars",
+        series: {
+            0: {type: "bars", targetAxisIndex: 0},
+            1: {type: "line", targetAxisIndex: 1}
+        }
     }
 };

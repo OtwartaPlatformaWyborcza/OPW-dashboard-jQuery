@@ -10,22 +10,21 @@ Celem projektu jest niezależna i obiektywna ocena wyników wyborów prezydencki
 | Tablica Trello   | https://trello.com/b/hKes4OCP/otwarta-platforma-wyborcza  |
 | Backend daily (Java EE)   | http://91.250.114.134:8080/opw/  |
 | Frontend komisja daily (AngularJS) | http://91.250.114.134/ |
-| Frontend wyniki daily (jQuery) | http://91.250.114.134/dashboard/ |
-
+| Frontend wyniki daily (jQuery) | [v1 - flot](http://91.250.114.134/dashboard/) i [v2 - Google Chart](http://91.250.114.134/dashboard-v2/)|
 
 ## Roadmap 
 
-### Wersja 0.1 [wydana]
+### Wersja 0.1a [wydana 13.04.2015]
 * Projekt panelów
 * Pobieranie danych z serwera jako JSON
-* Rysowanie wykresów
-
-### Wersja 0.2
-* Obsługa błędu 500
-* Korekty wizualne
+* Rysowanie wykresów flot
 * użycie API key
 * Zamiana wykresu kołowego na wskaźnik (gauge)
-* Sortowanie wyników
+
+### Wersja 0.1b [work in progress]
+* Przepisanie wykresów do Google Charts
+* Wykres - mapa województw
+* Podwójna skala dla kandydatów
 
 ### Wersja 1.0
-* Możliwość prostego wyświetlania wyników dla poszczególnych jednostek terytorialnych
+* Możliwość kompleksowego wyświetlania wyników dla poszczególnych jednostek terytorialnych

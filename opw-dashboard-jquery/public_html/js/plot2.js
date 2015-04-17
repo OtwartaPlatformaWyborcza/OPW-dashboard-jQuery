@@ -1,38 +1,109 @@
 google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'controls', 'table', 'geochart']});
 
 
-function wojewodztwa() {
-    var data = google.visualization.arrayToDataTable([
-        ['Województwo', 'Frekwencja', 'Otrzymane protokoły'],
-        ['Dolnośląskie', 2761477, 131],
-        ['Kujawsko-pomorskie', 1324110, 176],
-        ['Lubelskie', 959574, 127],
-        ['Lubuskie', 907563, 117],
-        ['Łódzkie', 655875, 19],
-        ['Małopolskie', 607906, 260],
-        ['Mazowieckie', 380181, 17],
-        ['Opolskie', 371282, 141],
-        ['Podkarpackie', 67370, 244],
-        ['Podlaskie', 52192, 43],
-        ['Pomorskie', 52192, 43],
-        ['śląskie', 38262, 11],
-        ['świętokrzyskie', 48262, 145],
-        ['warmińsko-mazurskie', 38262, 211],
-        ['wielkopolskie', 37262, 111],
-        ['zachodniopomorskie', 78262, 80]
-      ]);
+function wojewodztwa(data) {
 
-      var options = {
+    var woj = {
+        0: [0,0,0,0],
+        1: [0,0,0,0],
+        2: [0,0,0,0],
+        3: [0,0,0,0],
+        4: [0,0,0,0],
+        5: [0,0,0,0],
+        6: [0,0,0,0],
+        7: [0,0,0,0],
+        8: [0,0,0,0],
+        9: [0,0,0,0],
+        10: [0,0,0,0],
+        11: [0,0,0,0],
+        12: [0,0,0,0],
+        13: [0,0,0,0],
+        14: [0,0,0,0],
+        15: [0,0,0,0]
+    }
+
+    var name = ['dolnośląskie','kujawsko-pomorskie','lubelskie','lubuskie','łódzkie','małopolskie','mazowieckie','opolskie','podkarpackie','podlaskie','pomorskie','śląskie','świętokrzyskie','warmińsko-mazurskie','wielkopolskie','zachodniopomorskie']
+
+    var id,z;
+    for (var i in data)
+    {
+        id = parseInt( (data[i].okregowaName.match(/\d{1,2}/)) );
+        switch(true) {
+            case (id<5):
+                z=0;
+                break;
+            case (id<8):
+                z=1;
+                break;
+            case (id<12):
+                z=2;
+                break;
+            case (id<14):
+                z=3;
+                break;
+            case (id<18):
+                z=4;
+                break;
+            case (id<21):
+                z=5;
+                break;
+            case (id<27):
+                z=6;
+                break;
+            case (id<28):
+                z=7;
+                break;
+            case (id<32):
+                z=8;
+                break;
+            case (id<35):
+                z=9;
+                break;
+            case (id<39):
+                z=10;
+                break;
+            case (id<42):
+                z=11;
+                break;
+            case (id<43):
+                z=12;
+                break;
+            case (id<45):
+                z=13;
+                break;
+            case (id<50):
+                z=14;
+                break;
+            case (id<52):
+                z=15;
+                break;
+        }
+        woj[z][0]+=data[i].frekwencja;
+        woj[z][1]+=data[i].frekwencjaAll;
+        woj[z][2]+=data[i].obwodowa;
+        woj[z][3]+=data[i].obwodowaAll;
+    }
+
+    console.log(woj);
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Województwo');
+    data.addColumn('number', 'Frekwencja');
+    data.addColumn('number', 'Otrzymane protokoły');
+
+    for (var i in woj) {
+        data.addRows( [ [ name[i], Math.round( woj[i][0] * 10000 / woj[i][1] )/100, Math.round(( woj[i][2] * 10000 ) / woj[i][3])/100 ] ] );
+    }
+
+    var options = {
         region: 'PL',
         resolution: 'provinces',
         colorAxis: {colors: ['#B0D794', '#4C6472']},
         backgroundColor: '#337AB7'
-      };
+    };
 
-      var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
+    var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
 
-
-      chart.draw(data, options);
+    chart.draw(data, options);
 }
 
 function prezydent(data) {
@@ -47,10 +118,7 @@ function prezydent(data) {
     var suma = 0;
     for (i in data)
         suma+=data[i].glosow;
-
-    console.log("Suma:"+suma);
-    console.log()
-    
+    console.log(suma);
     var procent, nazwisko, etykieta, opis, imieNazwisko;
     for (i in data) {
         procent =  ( ( data[i].glosow * 100 ) / suma ) / 100;
@@ -114,7 +182,7 @@ $( document ).ready( function() {
             success: function( data ) {
                 prezydent(data.kandydatList);
                 gauge(data.obwodowaAll, data.obwodowa);
-                wojewodztwa();
+                wojewodztwa(data.okregowaList);
             }
     });
 });

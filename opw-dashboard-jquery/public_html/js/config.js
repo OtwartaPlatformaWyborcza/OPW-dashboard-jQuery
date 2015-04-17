@@ -16,7 +16,7 @@ var cfg = {
         seriesType: "bars",
         series: {
             0: {type: "bars", targetAxisIndex: 0},
-            1: {type: "line", targetAxisIndex: 1, color: "none", enableInteractivity: false},
+            1: {type: "line", targetAxisIndex: 2, color: "none", enableInteractivity: false},
             2: {type: "line", targetAxisIndex: 2, enableInteractivity: false}
         }
     }

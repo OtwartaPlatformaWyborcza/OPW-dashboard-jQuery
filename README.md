@@ -15,16 +15,16 @@ Celem projektu jest niezależna i obiektywna ocena wyników wyborów prezydencki
 ## Roadmap 
 
 ### Wersja 0.1a [wydana 13.04.2015]
-* Projekt panelów
-* Pobieranie danych z serwera jako JSON
-* Rysowanie wykresów flot
-* użycie API key
-* Zamiana wykresu kołowego na wskaźnik (gauge)
+- [x] Projekt panelów
+- [x] Pobieranie danych z serwera jako JSON
+- [x] Rysowanie wykresów flot
+- [x] użycie API key
+- [x] Zamiana wykresu kołowego na wskaźnik (gauge)
 
 ### Wersja 0.1b [work in progress]
-* Przepisanie wykresów do Google Charts
-* Wykres - mapa województw
-* Podwójna skala dla kandydatów
+- [ ] Przepisanie wykresów do Google Charts
+- [x] Wykres - mapa województw
+* ~~Podwójna skala dla kandydatów~~
 
 ### Wersja 1.0
 * Możliwość kompleksowego wyświetlania wyników dla poszczególnych jednostek terytorialnych

@@ -10,6 +10,16 @@ var cfg = {
         vAxis: {format: '#%'},
         chartArea: {width: '90%'},
         seriesType: "bars",
+    },
+
+    map: {
+        region: 'PL',
+        resolution: 'provinces',
+        colorAxis: {colors: ['#B0D794', '#4C6472']},
+        backgroundColor: '#337AB7',
+        legend: {
+            numberFormat: "#.#'%"
+        }
     }
 };
 
@@ -20,3 +30,8 @@ var okrInWoj = [
     [32,33,34], [35,36,37,38], [39,40,41],
     [42], [43,44], [45,46,47,48,49], [50,51]
 ];
+
+ var wojName = ['dolnośląskie','kujawsko-pomorskie','lubelskie','lubuskie',
+    'łódzkie','małopolskie','mazowieckie','opolskie',
+    'podkarpackie','podlaskie','pomorskie','śląskie',
+    'świętokrzyskie','warmińsko-mazurskie','wielkopolskie','zachodniopomorskie'];

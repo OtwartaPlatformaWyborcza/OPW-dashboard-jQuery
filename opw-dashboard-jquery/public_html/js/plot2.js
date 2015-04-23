@@ -1,6 +1,18 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'controls', 'table', 'geochart']});
+google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'geochart']});
 
+/**
+ * Obliczanie procentu
+ * @param  {Number} x     Liczba do obliczenia
+ * @param  {Number} max   100%
+ * @param  {Number} digit Precyzja wyniku
+ * @return {Number}       Wynik procentowy
+ */
+function procent(x,max,digit=0) {
+    var pow = Math.pow( 10, digit );
+    return Math.round( (x * 100 / max) * pow ) / pow;
+}
 
+//Rysowanie map
 function wojewodztwa(data) {
     var woj = {
         0: [0,0,0,0], 1: [0,0,0,0], 2: [0,0,0,0], 3: [0,0,0,0],
@@ -9,12 +21,7 @@ function wojewodztwa(data) {
         12: [0,0,0,0], 13: [0,0,0,0], 14: [0,0,0,0], 15: [0,0,0,0]
     }
 
-    var wojName = ['dolnośląskie','kujawsko-pomorskie','lubelskie','lubuskie',
-    'łódzkie','małopolskie','mazowieckie','opolskie',
-    'podkarpackie','podlaskie','pomorskie','śląskie',
-    'świętokrzyskie','warmińsko-mazurskie','wielkopolskie','zachodniopomorskie'];
-
-    var idOkr, idWoj=0;
+    var idOkr, idWoj;
     for (var i in data)
     {
         idOkr = parseInt( (data[i].okregowaName.match(/\d{1,2}/)) );
@@ -42,44 +49,37 @@ function wojewodztwa(data) {
 
     var frekw, prot;
     for (var i in woj) {
-        frekw = Math.round( woj[i][0] *100/ woj[i][1]);
-        prot = Math.round(( woj[i][2] * 100 ) / woj[i][3]);
+        frekw = procent(woj[i][0], woj[i][1], 2);
+        prot = procent(woj[i][2], woj[i][3], 2);
         data.addRows([[ wojName[i], frekw, prot ]]);
         data2.addRows([[ wojName[i], prot, frekw ]]);
     }
 
-    var options = {
-        region: 'PL',
-        resolution: 'provinces',
-        colorAxis: {colors: ['#B0D794', '#4C6472']},
-        backgroundColor: '#337AB7',
-        legend: {
-            numberFormat: "#.#'%"
-        }
-    };
-
     var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
-    chart.draw(data, options);
+    chart.draw(data, cfg.map);
 
     var chart2 = new google.visualization.GeoChart(document.getElementById('wykres4-2'));
-    chart2.draw(data2, options);
+    chart2.draw(data2, cfg.map);
     $("#wykres4-2").addClass("hidden");
+    
+    function popInfoWindow() {
+        var selectedItem = chart.getSelection()[0];
+        if (selectedItem) {
+            $('.modal').modal('show');
+            var topping = data.getValue(selectedItem.row, 0);
+            //alert('The user selected ' + topping);
+        }
+    }
+    google.visualization.events.addListener(chart, 'select', popInfoWindow);
 }
 
 $(function(){
-$('input:radio').change(
-    function(){
-        /*if (this.value == "proto") {
-            $("#wykres4").addClass()
-            $("#wykres4-2").css("display","block");            
-        } else {
-            $("#wykres4").css("display","block");
-            $("#wykres4-2").css("display","none");
-        }*/
-        $("#wykres4").toggleClass("hidden");
-        $("#wykres4-2").toggleClass("hidden");
-    }
-);
+    $('input:radio').change(
+        function(){
+            $("#wykres4").toggleClass("hidden");
+            $("#wykres4-2").toggleClass("hidden");
+        }
+    );
 });
 
 // Rysowanie wykresu dla kandydatow
@@ -93,14 +93,14 @@ function prezydent(data) {
     for (i in data)
         suma+=data[i].glosow;
 
-    var procent, nazwisko, etykieta, opis, imieNazwisko;
+    var procenty, nazwisko, etykieta, opis, imieNazwisko;
     for (i in data) {
-        procent =  ( ( data[i].glosow * 100 ) / suma ) / 100;
+        procenty =  procent(data[i].glosow, suma)/100;
         imieNazwisko = data[i].firstname + '&nbsp' + data[i].lastname.toUpperCase();
         nazwisko = data[i].lastname.toUpperCase();
         opis = "<b>" + imieNazwisko + " </b>Głosów:&nbsp;" + data[i].glosow.toString() +  "</b>";
-        etykieta =  Math.round(procent*100) + '%';
-        dataChart.addRows( [ [ nazwisko, procent, etykieta, opis ] ] );
+        etykieta =  Math.round(procenty*100) + '%';
+        dataChart.addRows( [ [ nazwisko, procenty, etykieta, opis ] ] );
     }
 
     dataChart.sort([{column: 0}]);
@@ -120,7 +120,7 @@ function prezydent(data) {
 function gauge(a, b) {
     var data = google.visualization.arrayToDataTable([
         ['Label', 'value'],
-        ['gauge', Math.round(b/a*100) ]
+        ['gauge', procent(b,a) ]
     ]);
 
     var options = {

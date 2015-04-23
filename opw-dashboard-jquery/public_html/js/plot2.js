@@ -35,11 +35,17 @@ function wojewodztwa(data) {
     data.addColumn('number', 'Frekwencja (procentowo)');
     data.addColumn('number', 'Otrzymane protokoły (procentowo)');
 
+    var data2 = new google.visualization.DataTable();
+    data2.addColumn('string', 'Województwo');
+    data2.addColumn('number', 'Otrzymane protokoły (procentowo)');
+    data2.addColumn('number', 'Frekwencja (procentowo)');
+
     var frekw, prot;
     for (var i in woj) {
         frekw = Math.round( woj[i][0] *100/ woj[i][1]);
         prot = Math.round(( woj[i][2] * 100 ) / woj[i][3]);
         data.addRows([[ wojName[i], frekw, prot ]]);
+        data2.addRows([[ wojName[i], prot, frekw ]]);
     }
 
     var options = {
@@ -53,9 +59,28 @@ function wojewodztwa(data) {
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
-
     chart.draw(data, options);
+
+    var chart2 = new google.visualization.GeoChart(document.getElementById('wykres4-2'));
+    chart2.draw(data2, options);
+    $("#wykres4-2").addClass("hidden");
 }
+
+$(function(){
+$('input:radio').change(
+    function(){
+        /*if (this.value == "proto") {
+            $("#wykres4").addClass()
+            $("#wykres4-2").css("display","block");            
+        } else {
+            $("#wykres4").css("display","block");
+            $("#wykres4-2").css("display","none");
+        }*/
+        $("#wykres4").toggleClass("hidden");
+        $("#wykres4-2").toggleClass("hidden");
+    }
+);
+});
 
 // Rysowanie wykresu dla kandydatow
 function prezydent(data) {

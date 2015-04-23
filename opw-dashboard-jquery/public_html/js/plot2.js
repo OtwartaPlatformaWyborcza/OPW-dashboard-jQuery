@@ -1,4 +1,4 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'geochart']});
+google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'table','geochart']});
 
 /**
  * Obliczanie procentu
@@ -42,45 +42,29 @@ function wojewodztwa(data) {
     data.addColumn('number', 'Frekwencja (procentowo)');
     data.addColumn('number', 'Otrzymane protokoły (procentowo)');
 
-    var data2 = new google.visualization.DataTable();
-    data2.addColumn('string', 'Województwo');
-    data2.addColumn('number', 'Otrzymane protokoły (procentowo)');
-    data2.addColumn('number', 'Frekwencja (procentowo)');
-
     var frekw, prot;
     for (var i in woj) {
         frekw = procent(woj[i][0], woj[i][1], 2);
         prot = procent(woj[i][2], woj[i][3], 2);
         data.addRows([[ wojName[i], frekw, prot ]]);
-        data2.addRows([[ wojName[i], prot, frekw ]]);
     }
 
     var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
     chart.draw(data, cfg.map);
 
-    var chart2 = new google.visualization.GeoChart(document.getElementById('wykres4-2'));
-    chart2.draw(data2, cfg.map);
-    $("#wykres4-2").addClass("hidden");
-    
     function popInfoWindow() {
         var selectedItem = chart.getSelection()[0];
         if (selectedItem) {
-            $('.modal').modal('show');
             var topping = data.getValue(selectedItem.row, 0);
-            //alert('The user selected ' + topping);
+            var table = new google.visualization.Table(document.getElementById('tabela'));
+            table.draw(data, {showRowNumber: true});
+            $(".modal-title").text('Dane z województwa: '+topping);
+            $('.modal').modal('show');
         }
     }
     google.visualization.events.addListener(chart, 'select', popInfoWindow);
 }
 
-$(function(){
-    $('input:radio').change(
-        function(){
-            $("#wykres4").toggleClass("hidden");
-            $("#wykres4-2").toggleClass("hidden");
-        }
-    );
-});
 
 // Rysowanie wykresu dla kandydatow
 function prezydent(data) {
@@ -116,27 +100,6 @@ function prezydent(data) {
 
 }
 
-// Rysowanie gauge
-function gauge(a, b) {
-    var data = google.visualization.arrayToDataTable([
-        ['Label', 'value'],
-        ['gauge', procent(b,a) ]
-    ]);
-
-    var options = {
-          width: 400, height: 120,
-          redFrom: 0, redTo: 33,
-          yellowFrom: 33, yellowTo: 66,
-          greenFrom: 66, greenTo: 100,
-          minorTicks: 5
-    };
-
-    var chart = new google.visualization.Gauge(document.getElementById('gauge'));
-
-    chart.draw(data, options);
-
-}
-
 
 $( document ).ready( function() { 
     $.ajax ( {
@@ -155,7 +118,8 @@ $( document ).ready( function() {
             },
             success: function( data ) {
                 prezydent(data.kandydatList);
-                gauge(data.obwodowaAll, data.obwodowa);
+                gauge( procent(data.obwodowa, data.obwodowaAll), "canvProto" );
+                gauge( procent(data.frekwencja, data.frekwencjaAll), "canvFrekw" );
                 wojewodztwa(data.okregowaList);
                 var aktualizacja = data.exportDate.substring( 11, 19 );
                 $( "#aktualizacja" ).append( "<span>" + aktualizacja + "</span>" );

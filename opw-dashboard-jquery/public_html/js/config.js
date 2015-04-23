@@ -10,12 +10,13 @@ var cfg = {
         vAxis: {format: '#%'},
         chartArea: {width: '90%'},
         seriesType: "bars",
+        colors: ['#5CB85C']
     },
 
     map: {
         region: 'PL',
         resolution: 'provinces',
-        colorAxis: {colors: ['#B0D794', '#4C6472']},
+        colorAxis: {colors: ['#5CB85C', '#F0AD4E','#D9534F']},
         backgroundColor: '#337AB7',
         legend: {
             numberFormat: "#.#'%"

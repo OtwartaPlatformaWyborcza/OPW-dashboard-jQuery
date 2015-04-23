@@ -18,6 +18,9 @@
 
 </head>
 <body>
+    <div class="social">
+        <a href="https://www.facebook.com/klepiekod?fref=ts" target="_blank">f</a>
+    </div>
     <div class="container">
 
         <div class="row logo">
@@ -28,25 +31,35 @@
                     <h1><small>Otwarta Platforma Wyborcza</small></h1>
                 </div>
             </div>
-            <div class="col-md-2 text-center"><p id="aktualizacja" class="text-muted">Ostatnia aktualizacja </p></div>
+            <div class="col-md-2 text-center"><p id="aktualizacja" class="text-muted">Ostatnia aktualizacja danych </p></div>
         </div>
 
+        <hr>
+        
         <div class="row">
-            <hr>
             <!-- lewy -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Liczba protokołów dodanych do bazy</h3>
                     </div>
                     <div class="panel-body">
-                        <div id="gauge"></div>
+                        <canvas class="gauge" id="canvProto"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Frekwencja wyborcza</h3>
+                    </div>
+                    <div class="panel-body">
+                        <canvas class="gauge" id="canvFrekw"></canvas>
                     </div>
                 </div>
             </div>
 
             <!-- prawy -->
-            <div class="col-md-8">
+            <div class="col-md-9">
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -58,28 +71,36 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Frekwencja w poszczególnych okręgach wyborczych</h3>
+                        <h3 class="panel-title">Frekwencja w województwach</h3>
                     </div>
                     
-                    <div class="panel-body">
-                    
-                        <div class="switch">
-                            <input type="radio" class="switch-input" name="view" value="frekw" id="frekw" checked>
-                            <label for="frekw" class="switch-label switch-label-off">frekwencja</label>
-                            <input type="radio" class="switch-input" name="view" value="proto" id="proto">
-                            <label for="proto" class="switch-label switch-label-on">protokoły</label>
-                            <span class="switch-selection"></span>
-                        </div>
+                    <div class="panel-body mapa">
                         <div id="wykres4"></div>
-                        <div id="wykres4-2"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">tytul</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="tabela"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

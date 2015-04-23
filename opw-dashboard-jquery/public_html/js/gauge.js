@@ -1,6 +1,6 @@
-function gauge( procent ) {
+function gauge( procent, elementId ) {
 
-    var canvas = document.getElementById( "canvas" );
+    var canvas = document.getElementById( elementId );
     var ctx = canvas.getContext( "2d" );
 
     var W = canvas.width;
@@ -33,13 +33,13 @@ function gauge( procent ) {
     ctx.arc( W / 2, H - 30, 100, 0, radians, true );
     ctx.stroke();
 
-    ctx.font = "17px arial";
+    ctx.font = "17px Open sans";
     ctx.fillStyle = "#777"
     ctx.fillText( "0%", 38, H - 10 );
     ctx.fillText( "100%", W - 72, H - 10 );
 
     ctx.fillStyle = "#333"
-    ctx.font = "50px arial";
+    ctx.font = "50px Open Sans";
     var tekst = Math.round( procent ) + "%";
     ctx.fillText( tekst, ( W - ctx.measureText( tekst ).width ) / 2, H - 30 );
 }

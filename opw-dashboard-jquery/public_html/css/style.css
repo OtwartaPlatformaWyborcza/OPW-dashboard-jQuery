@@ -1,5 +1,20 @@
 body {
 	font-family: 'Open Sans', sans-serif;
+	background-image: url("../img/bg.png"); 
+}
+
+.container {
+	background-color: #FAFAFA;
+	box-shadow: 0 0 10px #CCC;
+	padding-top: 20px;
+}
+
+.panel-title span {
+	float: right;
+}
+
+.logo h1, .logo h2 {
+	margin: 0;
 }
 
 .data-point-label {

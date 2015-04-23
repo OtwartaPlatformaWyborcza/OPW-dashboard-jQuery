@@ -4,12 +4,11 @@ var jsonURL = "http://91.250.114.134:8080/opw/service/wynik/complete";
 
 var cfg = {
     vertical: {
-        title: 'Wyniki kandydatów',
         tooltip: {isHtml: true},
         legend: 'none',
         hAxis: { slantedText:true, slantedTextAngle:20 },
         vAxis: {format: '#%'},
-        //chartArea: {width: '85%'},
+        chartArea: {width: '90%'},
         seriesType: "bars",
     }
 };

@@ -1,4 +1,4 @@
-google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'table','geochart']});
+google.load('visualization', '1.1', {'packages':['corechart', 'gauge', 'table','geochart']});
 
 /**
  * Obliczanie procentu
@@ -10,6 +10,18 @@ google.load('visualization', '1.0', {'packages':['corechart', 'gauge', 'table','
 function procent(x,max,digit=0) {
     var pow = Math.pow( 10, digit );
     return Math.round( (x * 100 / max) * pow ) / pow;
+}
+
+/**
+ * Sprawdzenie do którego województwa należy okręg
+ * @param  {Number} okreg ID okręgu
+ * @return {Number}       ID wojewoództwa
+ */
+function getWojId(okreg) {
+    for (var i = 0; i < okrInWoj.length; i++) {
+        if (okrInWoj[i].indexOf(okreg) >= 0)
+            return i;
+    }
 }
 
 //Rysowanie map
@@ -25,46 +37,59 @@ function wojewodztwa(data) {
     for (var i in data)
     {
         idOkr = parseInt( (data[i].okregowaName.match(/\d{1,2}/)) );
-        for (var j = 0; j < okrInWoj.length; j++) {
-            if (okrInWoj[j].indexOf(idOkr) >= 0) {
-                idWoj = j;
-                break;
-            }
-        }
+        idWoj = getWojId(idOkr);
+
         woj[idWoj][0]+=data[i].frekwencja;
         woj[idWoj][1]+=data[i].frekwencjaAll;
         woj[idWoj][2]+=data[i].obwodowa;
         woj[idWoj][3]+=data[i].obwodowaAll;
     }
 
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Województwo');
-    data.addColumn('number', 'Frekwencja (procentowo)');
-    data.addColumn('number', 'Otrzymane protokoły (procentowo)');
+    var chartData = new google.visualization.DataTable();
+    chartData.addColumn('string', 'Województwo');
+    chartData.addColumn('number', 'Frekwencja (procentowo)');
+    chartData.addColumn('number', 'Otrzymane protokoły (procentowo)');
 
     var frekw, prot;
     for (var i in woj) {
         frekw = procent(woj[i][0], woj[i][1], 2);
         prot = procent(woj[i][2], woj[i][3], 2);
-        data.addRows([[ wojName[i], frekw, prot ]]);
+        chartData.addRows([[ wojName[i], frekw, prot ]]);
     }
 
     var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
-    chart.draw(data, cfg.map);
+    chart.draw(chartData, cfg.map);
 
-    function popInfoWindow() {
+    function popInfo() {
         var selectedItem = chart.getSelection()[0];
-        if (selectedItem) {
-            var topping = data.getValue(selectedItem.row, 0);
-            var table = new google.visualization.Table(document.getElementById('tabela'));
-            table.draw(data, {showRowNumber: true});
-            $(".modal-title").text('Dane z województwa: '+topping);
-            $('.modal').modal('show');
-        }
+        var wojewodztwo = chartData.getValue(selectedItem.row, 0);
+        oknoModal( data, wojewodztwo );
     }
-    google.visualization.events.addListener(chart, 'select', popInfoWindow);
+
+    google.visualization.events.addListener(chart, 'select', popInfo);
 }
 
+function oknoModal(data, wojewodztwo) {
+    var chartData = new google.visualization.DataTable();
+    chartData.addColumn('string', 'Okręg');
+    chartData.addColumn('number', 'Frekwencja (procentowo)');
+    chartData.addColumn('number', 'Otrzymane protokoły (procentowo)');
+
+    var idOkr,nameOkr;
+    for (var i in data) {
+        nameOkr = data[i].okregowaName;
+        idOkr = parseInt( (nameOkr.match(/\d{1,2}/)) );
+        if ( wojName[getWojId(idOkr)] === wojewodztwo) {
+            chartData.addRows([[nameOkr, procent(data[i].frekwencja,data[i].frekwencjaAll), procent(data[i].obwodowa,data[i].obwodowaAll) ]]);
+        }
+    }
+
+    var tabela = new google.visualization.Table(document.getElementById('tabela'));
+    tabela.draw(chartData,{style: 'font-family:Open Sans'});
+    
+    $(".modal-title").text('Dane z województwa: '+wojewodztwo);
+    $('.modal').modal('show');
+}
 
 // Rysowanie wykresu dla kandydatow
 function prezydent(data) {

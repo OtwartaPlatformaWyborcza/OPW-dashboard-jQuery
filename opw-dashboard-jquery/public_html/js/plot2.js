@@ -7,7 +7,8 @@ google.load('visualization', '1.1', {'packages':['corechart', 'gauge', 'table','
  * @param  {Number} digit Precyzja wyniku
  * @return {Number}       Wynik procentowy
  */
-function procent(x,max,digit=0) {
+function procent(x,max,digit) {
+    digit = digit || 1
     var pow = Math.pow( 10, digit );
     return Math.round( (x * 100 / max) * pow ) / pow;
 }

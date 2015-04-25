@@ -8,7 +8,7 @@ var cfg = {
         legend: 'none',
         hAxis: { slantedText:true, slantedTextAngle:20 },
         vAxis: {format: '#%'},
-        chartArea: {width: '90%'},
+        chartArea: {width: '90%', top: 10, height: '80%'},
         seriesType: "bars",
         colors: ['#5CB85C']
     },

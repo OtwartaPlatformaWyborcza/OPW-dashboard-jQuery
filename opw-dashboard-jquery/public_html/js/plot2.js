@@ -1,19 +1,21 @@
 google.load('visualization', '1.1', {'packages': ['corechart', 'gauge', 'table','geochart']});
 
+//Wyliczanie procentu z liczby
 function procent(x, max, digit) {
     digit = digit || 1
     var pow = Math.pow(10, digit);
     return Math.round((x * 100 / max) * pow) / pow;
 }
 
+//Zwraca id okregu wyborczego
 function getWojId(okreg) {
-    for (var i = 0; i < okrInWoj.length; i++) {
+    for (var i = 0; max = okrInWoj.length, i < max; i++) {
         if (okrInWoj[i].indexOf(okreg) >= 0)
             return i;
     }
 }
 
-//Rysowanie map
+//Rysowanie mapy
 function wojewodztwa(data) {
     var woj = {
         0: [0, 0, 0, 0], 1: [0, 0, 0, 0], 2: [0, 0, 0, 0], 3: [0, 0, 0, 0],
@@ -24,7 +26,7 @@ function wojewodztwa(data) {
 
     var idOkr, idWoj;
     for (var i in data) {
-        idOkr = parseInt((data[i].okregowaName.match(/\d{1, 2}/)));
+        idOkr = parseInt((data[i].okregowaName.match(/\d{1,2}/)));
         idWoj = getWojId(idOkr);
 
         woj[idWoj][0] += data[i].frekwencja;
@@ -48,6 +50,7 @@ function wojewodztwa(data) {
     var chart = new google.visualization.GeoChart(document.getElementById('wykres4'));
     chart.draw(chartData, cfg.map);
 
+    //Dane do tabel
     function popInfo() {
         var selectedItem = chart.getSelection()[0];
         var wojewodztwo = chartData.getValue(selectedItem.row, 0);
@@ -57,6 +60,7 @@ function wojewodztwa(data) {
     google.visualization.events.addListener(chart, 'select', popInfo);
 }
 
+//Pop-up do mapy
 function oknoModal(data, wojewodztwo) {
     var chartData = new google.visualization.DataTable();
     chartData.addColumn('string', 'Okręg');
@@ -85,7 +89,7 @@ function prezydent(data) {
     dataChart.addColumn('string', 'kandydat');
     dataChart.addColumn('number', 'wynik procentowy');
     dataChart.addColumn({type: 'string', role: 'annotation'});
-    dataChart.addColumn({type: 'string', role: 'tooltip', 'p': {'html':true}});
+    dataChart.addColumn({type: 'string', role: 'tooltip', p: {html:true}});
     var suma = 0;
     for (i in data)
         suma += data[i].glosow;
@@ -125,7 +129,7 @@ $(document).ready(function() {
         url: jsonURL,
         statusCode: {
             500: function() {
-                console.log('Error: 500');
+                window.location.href = "err500.html";
             }
         },
         success: function(data) {

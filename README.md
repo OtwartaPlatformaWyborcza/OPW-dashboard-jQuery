@@ -10,7 +10,7 @@ Celem projektu jest niezależna i obiektywna ocena wyników wyborów prezydencki
 | Tablica Trello   | https://trello.com/b/hKes4OCP/otwarta-platforma-wyborcza  |
 | Backend daily (Java EE)   | http://91.250.114.134:8080/opw/  |
 | Frontend komisja daily (AngularJS) | http://91.250.114.134/ |
-| Frontend wyniki daily (jQuery) | [v1 - flot](http://91.250.114.134/dashboard/) i [v2 - Google Chart](http://91.250.114.134/dashboard-v2/)|
+| Frontend wyniki daily (jQuery) | http://91.250.114.134/dashboard/ |
 
 ## Roadmap 
 

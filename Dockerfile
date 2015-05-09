@@ -7,6 +7,7 @@ RUN rm -rf /etc/nginx/sites-enabled/*
 COPY ./docker/site/* /etc/nginx/sites/
 COPY ./docker/entrypoint.sh /
 
+RUN	mkdir /var/www/
 RUN	mkdir /var/www/js
 RUN	mkdir /var/www/css
 RUN	mkdir /var/www/img

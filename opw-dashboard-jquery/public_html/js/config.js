@@ -1,6 +1,9 @@
-var debug = true;
+var debug = false;
 var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591";
-var jsonURL = "https://otwartapw.pl/opw/service/wynik/complete";
+var baseUrl = window.location.href;
+var serviceUrl = "rest-api/service/wynik/complete"
+var jsonURL = baseUrl.concat(serviceUrl);
+//var jsonURL = "https://localhost:8080/opw/service/wynik/complete";
 
 var cfg = {
     vertical: {

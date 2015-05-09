@@ -13,9 +13,9 @@ RUN	mkdir /var/www/css
 RUN	mkdir /var/www/img
 
 COPY 	./opw-dashboard-jquery/public_html/* 	  /var/www/
-#COPY    ./opw-dashboard-jquery/public_html/js/*   /var/www/js/
-#COPY    ./opw-dashboard-jquery/public_html/css/*  /var/www/css/
-#COPY    ./opw-dashboard-jquery/public_html/img/*  /var/www/img/
+COPY    ./opw-dashboard-jquery/public_html/js/*   /var/www/js/
+COPY    ./opw-dashboard-jquery/public_html/css/*  /var/www/css/
+COPY    ./opw-dashboard-jquery/public_html/img/*  /var/www/img/
 
 RUN 	chmod +x /entrypoint.sh
 

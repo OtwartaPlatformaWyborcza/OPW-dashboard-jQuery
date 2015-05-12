@@ -131,11 +131,11 @@ function tooltip(data) {
     });
     
     $('#canvProto').on('mouseover', function(event){
-        $("#protoTooltip").fadeIn();
+        $("#protoTooltip").stop().fadeIn();
     });
 
     $('#canvProto').on('mouseout', function(event){
-        $("#protoTooltip").fadeOut();
+        $("#protoTooltip").stop().fadeOut();
     });
 
     $("#protoTooltip").append(data);

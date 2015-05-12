@@ -1,3 +1,49 @@
+#like-box{
+    position: fixed !important;
+    top: 150px;
+    left: -284px;
+    -webkit-transition: left 0.3s ease-out;
+    -moz-transition: left 0.3s ease-out;
+    -o-transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out;
+    z-index: 100;
+}
+
+#like-box:hover {
+    left: 0px;
+}
+ 
+#like-box .outside {
+    position: relative;
+    z-index: 1;
+    background: #3b5999;
+    padding: 2px;
+    min-width: 1px;
+    float: left;
+}
+ 
+#like-box .inside {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+}
+
+#like-box .belt {
+    position: relative;
+    z-index: 0;
+    float: left;
+    width: 50px; 
+    height: 50px;
+    background: #3b5999;
+    color: #fff;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 16px;
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+}
+
 body {
 	font-family: 'Open Sans', sans-serif;
 	background: linear-gradient(90deg, #485563 10%, #29323C 50% , #485563 90%); 
@@ -49,52 +95,6 @@ body {
 
 img {
 	border-radius: 5px;
-}
-
-#like-box{
-    position: fixed !important;
-    top: 150px;
-    left: -284px;
-    -webkit-transition: left 0.3s ease-out;
-    -moz-transition: left 0.3s ease-out;
-    -o-transition: left 0.3s ease-out;
-    transition: left 0.3s ease-out;
-    z-index: 100;
-}
-
-#like-box:hover {
-    left: 0px;
-}
- 
-#like-box .outside {
-    position: relative;
-    z-index: 1;
-    background: #3b5999;
-    padding: 2px;
-    min-width: 1px;
-    float: left;
-}
- 
-#like-box .inside {
-    position: relative;
-    z-index: 2;
-    background: #fff;
-}
-
-#like-box .belt {
-    position: relative;
-    z-index: 0;
-    float: left;
-    width: 50px; 
-    height: 50px;
-    background: #3b5999;
-    color: #fff;
-    font-weight: bold;
-    font-family: Verdana;
-    font-size: 16px;
-    -webkit-border-radius: 0 6px 6px 0;
-    -moz-border-radius: 0 6px 6px 0;
-    border-radius: 0 6px 6px 0;
 }
 
 #protoTooltip {

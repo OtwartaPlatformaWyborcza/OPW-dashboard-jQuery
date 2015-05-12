@@ -163,8 +163,7 @@ $(document).ready(function() {
             gauge(procent(data.obwodowa, data.obwodowaAll), 'canvProto');
             gauge(procent(data.frekwencja, data.frekwencjaAll), 'canvFrekw');
             wojewodztwa(data.okregowaList);
-            var aktualizacja = data.exportDate.substring(11, 19);
-            $('#aktualizacja').append('<span>' + aktualizacja + '</span>');
+            timeConvert(data.exportDate);
             tooltip(data.obwodowa);
         }
     });

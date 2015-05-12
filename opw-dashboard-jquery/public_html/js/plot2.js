@@ -118,6 +118,7 @@ function prezydent(data) {
 
 //Konwertuj timestamp na czytelna godzine
 function timeConvert(timestamp) {
+    console.log(timestamp);
     var date = new Date(timestamp);
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();

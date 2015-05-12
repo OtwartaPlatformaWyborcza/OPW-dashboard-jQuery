@@ -122,7 +122,7 @@ function timeConvert(timestamp) {
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
     var seconds = "0" + date.getSeconds();
-    return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
+    return hours.toString() + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
 }
 
 function tooltip(data) {

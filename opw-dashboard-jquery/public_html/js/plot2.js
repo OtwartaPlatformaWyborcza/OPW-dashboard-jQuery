@@ -117,7 +117,7 @@ function prezydent(data) {
 }
 
 //Konwertuj timestamp na czytelna godzine
-function timeConvert(timestamp) {
+function timeConvert(parseInt(timestamp)) {
     console.log(timestamp);
     var date = new Date(timestamp);
     var hours = date.getUTCHours();

@@ -96,3 +96,13 @@ img {
     -moz-border-radius: 0 6px 6px 0;
     border-radius: 0 6px 6px 0;
 }
+
+#protoTooltip {
+	display: none;
+	padding: 10px;
+	background: rgba(0,0,0,0.6);
+	position: fixed;
+	border-radius: 0 5px 5px 5px;
+	color: #fff;
+	z-index: 100;
+}

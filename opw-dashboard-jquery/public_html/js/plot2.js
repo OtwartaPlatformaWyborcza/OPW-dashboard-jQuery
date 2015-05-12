@@ -116,7 +116,33 @@ function prezydent(data) {
     prezydentChar.draw();
 }
 
+//Konwertuj timestamp na czytelna godzine
+function timeConvert(timestamp) {
+    var date = new Date(timestamp*1000);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
+}
+
+function tooltip(data) {
+        $("#canvProto").mousemove(function(e){
+        $("#protoTooltip").css({left: e.pageX+15, top: e.pageY+15});
+    });
+    
+    $('#canvProto').on('mouseover', function(event){
+        $("#protoTooltip").fadeIn();
+    });
+
+    $('#canvProto').on('mouseout', function(event){
+        $("#protoTooltip").fadeOut();
+    });
+
+    $("#protoTooltip").append(data);
+}
+
 $(document).ready(function() {
+
     $.ajax ({
         beforeSend: function(request) {
             request.setRequestHeader('X-OPW-API-token', token);
@@ -139,6 +165,7 @@ $(document).ready(function() {
             wojewodztwa(data.okregowaList);
             var aktualizacja = data.exportDate.substring(11, 19);
             $('#aktualizacja').append('<span>' + aktualizacja + '</span>');
+            tooltip(data.obwodowa);
         }
     });
 });

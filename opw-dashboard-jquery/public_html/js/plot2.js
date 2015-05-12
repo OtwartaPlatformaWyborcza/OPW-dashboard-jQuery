@@ -123,7 +123,7 @@ function timeConvert(timestamp) {
     var hours = date.getUTCHours();
     var minutes = "0" + date.getUTCMinutes();
     var seconds = "0" + date.getUTCSeconds();
-    return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
+    return $("#aktualizacja").append( hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2) ); 
 }
 
 function tooltip(data) {
@@ -165,7 +165,7 @@ $(document).ready(function() {
             gauge(procent(data.frekwencja, data.frekwencjaAll), 'canvFrekw');
             wojewodztwa(data.okregowaList);
             tooltip(data.obwodowa);
-            $("#aktualizacja").append( timeConvert(data.exportDate) );
+            timeConvert(data.exportDate);
         }
     });
 });

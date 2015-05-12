@@ -126,8 +126,8 @@ function timeConvert(timestamp) {
 }
 
 function tooltip(data) {
-        $("#canvProto").mousemove(function(e){
-        $("#protoTooltip").css({left: e.pageX+15, top: e.pageY+15});
+        $("#canvProto").mousemove(function(event){
+        $("#protoTooltip").css({left: event.clientX+15, top: event.clientY+15});
     });
     
     $('#canvProto').on('mouseover', function(event){
@@ -163,8 +163,8 @@ $(document).ready(function() {
             gauge(procent(data.obwodowa, data.obwodowaAll), 'canvProto');
             gauge(procent(data.frekwencja, data.frekwencjaAll), 'canvFrekw');
             wojewodztwa(data.okregowaList);
-            timeConvert(data.exportDate);
             tooltip(data.obwodowa);
+            $("#aktualizacja").apend( timeConvert(data.exportDate) );
         }
     });
 });

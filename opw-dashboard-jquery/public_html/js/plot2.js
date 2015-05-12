@@ -120,10 +120,10 @@ function prezydent(data) {
 function timeConvert(timestamp) {
     console.log(timestamp);
     var date = new Date(timestamp);
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "0" + date.getSeconds();
-    return hours.toString() + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
+    var hours = date.getUTCHours();
+    var minutes = "0" + date.getUTCMinutes();
+    var seconds = "0" + date.getUTCSeconds();
+    return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2); 
 }
 
 function tooltip(data) {

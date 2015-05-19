@@ -1,7 +1,7 @@
 var debug = false;
 var token = "d171794c5c1f7a50aeb8f7056ab84a4fbcd6fbd594b1999bddaefdd03efc0591";
 var baseUrl = window.location.href;
-var serviceUrl = "rest-api/service/wynik/complete"
+var serviceUrl = "opw/service/wynik/complete"
 var jsonURL = baseUrl.concat(serviceUrl);
 
 var cfg = {

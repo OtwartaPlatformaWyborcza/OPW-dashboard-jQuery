@@ -8,8 +8,7 @@ var cfg = {
     vertical: {
         tooltip: {isHtml: true},
         legend: 'none',
-        hAxis: { slantedText:true, slantedTextAngle:20 },
-        vAxis: {format: '#%'},
+        vAxis: {format: '#%', maxValue: '1'},
         chartArea: {width: '90%', top: 10, height: '80%'},
         seriesType: "bars",
         colors: ['#5CB85C']

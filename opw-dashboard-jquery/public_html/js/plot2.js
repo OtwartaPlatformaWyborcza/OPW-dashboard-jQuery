@@ -1,4 +1,4 @@
-google.load('visualization', '1.1', {'packages': ['corechart', 'gauge', 'table','geochart']});
+google.load('visualization', '1.1', {'packages': ['corechart', 'gauge', 'table', 'geochart']});
 
 //Wyliczanie procentu z liczby
 function procent(x, max, digit) {
@@ -17,6 +17,10 @@ function getWojId(okreg) {
 
 //Rysowanie mapy
 function wojewodztwa(data) {
+    if (data.length === 0) {
+        $("#wykres4").append( "<div class='alert alert-warning' role='alert'>Przepraszamy. Mapa tymczasowo niedostępna</div>" );
+        return;
+    }
     var woj = {
         0: [0, 0, 0, 0], 1: [0, 0, 0, 0], 2: [0, 0, 0, 0], 3: [0, 0, 0, 0],
         4: [0, 0, 0, 0], 5: [0, 0, 0, 0], 6: [0, 0, 0, 0], 7: [0, 0, 0, 0],
@@ -118,16 +122,16 @@ function prezydent(data) {
 
 //Konwertuj timestamp na czytelna godzine
 function timeConvert(timestamp) {
-    console.log(timestamp);
     var date = new Date(parseInt(timestamp));
     var hours = date.getUTCHours();
     var minutes = "0" + date.getUTCMinutes();
     var seconds = "0" + date.getUTCSeconds();
-    return $("#aktualizacja").append( hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2) ); 
+    var offset = date.getTimezoneOffset() / 60;
+    return $("#aktualizacja").append( hours-offset + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2) ); 
 }
 
 function tooltip(data) {
-        $("#canvProto").mousemove(function(event){
+    $("#canvProto").mousemove(function(event){
         $("#protoTooltip").css({left: event.clientX+15, top: event.clientY+15});
     });
     
